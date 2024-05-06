@@ -1,0 +1,25 @@
+{
+  "name": "urban-nest",
+  "version": "1.0.0",
+  "description": "Urban Nest is a web based Utility which helps you find properties to Rent/Buy/Sell Near you.\r It is made using MongoDB, Express, ReactJS, NodeJs and GoogleOAuth",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon api/index.js",
+    "start": "node api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamagraAg/Urban-Nest.git"
+  },
+  "author": "samagra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamagraAg/Urban-Nest/issues"
+  },
+  "homepage": "https://github.com/SamagraAg/Urban-Nest#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
