@@ -57,9 +57,9 @@ export default function Home() {
           Seamlessly and Stress-Free!
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm">
-          Urban Nest is the best place to find your next perfect place to live.
+          Urban Nest makes finding your dream home effortless.
           <br />
-          We have a wide range of properties for you to choose from.
+          Explore a diverse range of properties tailored to your perfect living experience!
         </div>
         <Link
           to={"/search"}
