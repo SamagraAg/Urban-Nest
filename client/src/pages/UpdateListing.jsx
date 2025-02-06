@@ -8,6 +8,9 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaMagic } from "react-icons/fa";
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -139,6 +142,20 @@ export default function CreateListing() {
     }
   };
 
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const handleRephrase = async () => {
+    const userInput = formData.description;
+    const prompt = `Create the description for property with following features and amenities, this description will be used for Property Listing website. + ${userInput}. Other information regarding this is Name=${formData.name}, NoOfBedrooms=${formData.bedrooms}, NoOfBathrooms=${formData.bathrooms}, parkingAvailable=${formData.parking}, IsPropertyFurnished=${formData.furnished}, and this property is avaible for ${formData.type}.Don't use any unneccessary jargons, fancy language. But make it look attractive, it should be like a story telling flow, making it look compelling to customer.Don't exceed 200words, and write atleast 50 words.`;
+    console.log(prompt);
+    const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    setFormData({
+      ...formData,
+      description: result.response.text(),
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -187,15 +204,25 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.name}
           />
-          <textarea
-            type="text"
-            placeholder="Description"
-            className="border p-3 rounded-lg"
-            id="description"
-            required
-            onChange={handleChange}
-            value={formData.description}
-          />
+          <div className="relative">
+            <textarea
+              type="text"
+              placeholder="Description"
+              className="border p-3 rounded-lg w-full pr-10"
+              id="description"
+              required
+              onChange={handleChange}
+              value={formData.description}
+            />
+            <button
+              type="button"
+              onClick={handleRephrase}
+              className="absolute right-5 top-3 text-gray-500 hover:text-gray-700"
+              title="Rephrase with AI"
+            >
+              <FaMagic className="w-5 h-5 text-gray-500 hover:text-gray-700" />
+            </button>
+          </div>
           <input
             type="text"
             placeholder="Address"
